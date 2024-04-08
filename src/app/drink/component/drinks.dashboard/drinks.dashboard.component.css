@@ -1,0 +1,8 @@
+.drink-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.drink-grid-item {
+  flex: 1 1 20rem;
+}

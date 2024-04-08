@@ -1,0 +1,37 @@
+.drink-item {
+  width: 20rem;
+  height: 20rem;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.2rem;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+img:hover {
+  transform: scale(1.5, 1.5);
+}
+
+.item-des {
+  position: absolute;
+  z-index: 999;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  top: 80%;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-family: Arial, sans-serif;
+  color: #fff;
+  height: 4rem;
+  width: auto;
+}

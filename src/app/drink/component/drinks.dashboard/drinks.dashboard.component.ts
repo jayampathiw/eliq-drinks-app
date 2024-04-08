@@ -3,14 +3,15 @@ import { DrinkDashboardService } from '../../service/dashboard/drink.dashboard.s
 import { DrinkStoreService } from '../../state/drink.store';
 import { provideComponentStore } from '@ngrx/component-store';
 import { AsyncPipe, NgFor } from '@angular/common';
+import { DrinksItemComponent } from '../drinks.item/drinks.item.component';
 
 @Component({
-  selector: 'app-drinks.dashboard',
+  selector: 'app-drinks-dashboard',
   standalone: true,
-  imports: [NgFor, AsyncPipe],
   templateUrl: './drinks.dashboard.component.html',
   styleUrl: './drinks.dashboard.component.css',
   providers: [provideComponentStore(DrinkStoreService), DrinkDashboardService],
+  imports: [NgFor, AsyncPipe, DrinksItemComponent],
 })
 export class DrinksDashboardComponent implements OnInit {
   allDrinks$ = signal(this.dashboardService.allDrinks$);
