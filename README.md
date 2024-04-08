@@ -4,7 +4,7 @@ Discover a world of cocktails with the EliqDrinksApp! Explore our curated list o
 
 ## Technical Details
 
-# Component Interrelation
+### Component Interrelation
 
 ![Component Interrelation Diagram](./src/assets/img/component%20diagram.png)
 
