@@ -1,1 +1,38 @@
-<p>drinks.details works!</p>
+<h2>{{ drink()?.strDrink }}</h2>
+<div class="content">
+  <img [src]="drink()?.strDrinkThumb" />
+  <section class="details">
+    <div class="details-item">
+      <div class="lable">Type:</div>
+      <div class="item-des">{{ drink()?.strAlcoholic }}</div>
+    </div>
+    <div class="details-item">
+      <div class="lable">Category:</div>
+      <div class="item-des">{{ drink()?.strCategory }}</div>
+    </div>
+    <div class="details-item">
+      <div class="lable">Creative Commons Confirmed:</div>
+      <div class="item-des">{{ drink()?.strCreativeCommonsConfirmed }}</div>
+    </div>
+    <div class="details-item">
+      <div class="lable">Drink Alternate:</div>
+      <div class="item-des">{{ drink()?.strDrinkAlternate }}</div>
+    </div>
+    <div class="details-item">
+      <div class="lable">Glass:</div>
+      <div class="item-des">{{ drink()?.strGlass }}</div>
+    </div>
+    <div class="details-item">
+      <div class="lable">Ingredients:</div>
+      <div class="item-des">{{ drink()?.strIngredients?.join(",") }}</div>
+    </div>
+    <div class="details-item">
+      <div class="lable">Measures:</div>
+      <div class="item-des">{{ drink()?.strMeasures?.join(",") }}</div>
+    </div>
+    <div class="details-item">
+      <div class="lable">Instructions:</div>
+      <div class="item-des">{{ drink()?.strInstructions }}</div>
+    </div>
+  </section>
+</div>

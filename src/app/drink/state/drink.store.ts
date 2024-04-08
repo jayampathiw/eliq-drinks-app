@@ -5,6 +5,7 @@ import { DrinkHttpService } from '../service/http/drink.http.service';
 import { ConfigurationService } from '../../configuration/service/configuration.service';
 import {
   EMPTY,
+  Observable,
   Subscription,
   catchError,
   combineLatest,
@@ -33,6 +34,8 @@ export class DrinkStoreService
   dataLoadingSubscription!: Subscription;
 
   allDrinks$ = this.select((state) => state.drinks);
+  loadingStatus$ = this.select((state) => state.loadingStatus);
+  selectedDrink$ = this.select((state) => state.selectedDrink);
 
   constructor(
     private drinkHttpService: DrinkHttpService,
@@ -42,6 +45,7 @@ export class DrinkStoreService
   }
 
   ngrxOnStoreInit() {
+    this.setLoadingStatus(true);
     this.dataLoadingSubscription = this.drinkHttpService
       .getDrinks()
       .pipe(
@@ -54,34 +58,77 @@ export class DrinkStoreService
       );
   }
 
-  getDrinkById = this.effect((id: string) => {
-    const selectedDrink$ = this.drinkHttpService
-      .getDrinksById(id)
-      .pipe(
-        map((drinks) =>
-          drinks.map((drink) => this.convertDrinkDTOToViewModel(drink))
-        )
-      );
-    const allDrinks$ = this.select((state) => state.drinks);
-    return combineLatest([selectedDrink$, allDrinks$]).pipe(
-      switchMap(([selectedDrink, allDrinks]) => {
-        this.setState({
-          loadingStatus: false,
-          selectedDrink: selectedDrink[0],
-          drinks: allDrinks,
-        });
-        return of(selectedDrink);
-      }),
-      catchError(() => EMPTY)
+  getDrinkById = this.effect((id$: Observable<string>) => {
+    return id$.pipe(
+      switchMap((id) => {
+        return this.drinkHttpService.getDrinksById(id).pipe(
+          map((drinks) =>
+            drinks.map((drink) => this.convertDrinkDTOToViewModel(drink, true))
+          ),
+          switchMap((drink) => {
+            const selectedDrink = drink;
+
+            this.setState((state) => {
+              const index = state?.drinks.findIndex(
+                (d) => d.idDrink == selectedDrink[0].idDrink
+              );
+              const newDrinkList = [...state?.drinks];
+              newDrinkList[index] = selectedDrink[0];
+
+              return {
+                ...state,
+                drinks: newDrinkList,
+                selectedDrink: selectedDrink[0],
+                loadingStatus: false,
+              };
+            });
+            return of(drink);
+          }),
+          catchError(() => {
+            this.setLoadingStatus(false);
+            return EMPTY;
+          })
+        );
+      })
     );
   });
+
+  // getDrinkById = this.effect((id: string) => {
+  //   const selectedDrink$ = this.drinkHttpService
+  //     .getDrinksById(id)
+  //     .pipe(
+  //       map((drinks) =>
+  //         drinks.map((drink) => this.convertDrinkDTOToViewModel(drink))
+  //       )
+  //     );
+  //   const allDrinks$ = this.select((state) => state.drinks);
+  //   return combineLatest([selectedDrink$, allDrinks$]).pipe(
+  //     switchMap(([selectedDrink, allDrinks]) => {
+  //       this.setState({
+  //         loadingStatus: false,
+  //         selectedDrink: selectedDrink[0],
+  //         drinks: allDrinks,
+  //       });
+  //       return of(selectedDrink);
+  //     }),
+  //     catchError(() => EMPTY)
+  //   );
+  // });
+
+  readonly setLoadingStatus = this.updater((state, status: boolean) => ({
+    ...state,
+    loadingStatus: status,
+  }));
 
   override ngOnDestroy(): void {
     super.ngOnDestroy();
     this.dataLoadingSubscription?.unsubscribe();
   }
 
-  private convertDrinkDTOToViewModel(dto: DrinkDTO): DrinkViewModel {
+  private convertDrinkDTOToViewModel(
+    dto: DrinkDTO,
+    dataLoadedStatus?: boolean
+  ): DrinkViewModel {
     const ingredients: string[] = [];
     const measures: string[] = [];
 
@@ -115,6 +162,7 @@ export class DrinkStoreService
       strImageAttribution: dto.strImageAttribution,
       strCreativeCommonsConfirmed: dto.strCreativeCommonsConfirmed,
       dateModified: dto.dateModified,
+      dataLoadedStatus: dataLoadedStatus || false,
     };
   }
 }

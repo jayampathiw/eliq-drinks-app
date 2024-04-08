@@ -1,0 +1,21 @@
+.content {
+  display: flex;
+}
+
+img {
+  margin-right: 3rem;
+}
+
+.details-item {
+  display: flex;
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+.lable {
+  width: 16rem;
+}
+.item-des {
+  word-wrap: break-word;
+  width: 35rem;
+}

@@ -1,5 +1,5 @@
-import { Component, input } from '@angular/core';
-import { DrinkViewModel } from '../../model/drink.model';
+import { Component, EventEmitter, Output, input } from '@angular/core';
+import { DrinkViewModel } from '../../../model/drink.model';
 
 @Component({
   selector: 'app-drinks-item',
@@ -10,4 +10,10 @@ import { DrinkViewModel } from '../../model/drink.model';
 })
 export class DrinksItemComponent {
   drinkItem = input.required<DrinkViewModel>();
+
+  @Output() selectedDrink = new EventEmitter<void>();
+
+  setSelectedDrink(): void {
+    this.selectedDrink.emit();
+  }
 }

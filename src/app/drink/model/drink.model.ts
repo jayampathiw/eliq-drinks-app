@@ -64,6 +64,7 @@ export interface DrinkViewModel {
   strImageAttribution?: string | null;
   strCreativeCommonsConfirmed?: string;
   dateModified?: string;
+  dataLoadedStatus?: boolean;
 }
 
 export interface DrinkResponse {
