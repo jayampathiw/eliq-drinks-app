@@ -1,1 +1,5 @@
 <p>drinks.dashboard works!</p>
+
+<ul>
+  <li *ngFor="let drink of allDrinks$() | async">{{ drink.strDrink }}</li>
+</ul>

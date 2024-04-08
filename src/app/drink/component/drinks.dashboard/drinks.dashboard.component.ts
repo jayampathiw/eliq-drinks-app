@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { DrinkHttpService } from '../../service/http/drink.http.service';
+import { Component, OnInit, signal } from '@angular/core';
+import { DrinkDashboardService } from '../../service/dashboard/drink.dashboard.service';
+import { DrinkStoreService } from '../../state/drink.store';
+import { provideComponentStore } from '@ngrx/component-store';
+import { AsyncPipe, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-drinks.dashboard',
   standalone: true,
-  imports: [],
+  imports: [NgFor, AsyncPipe],
   templateUrl: './drinks.dashboard.component.html',
   styleUrl: './drinks.dashboard.component.css',
+  providers: [provideComponentStore(DrinkStoreService), DrinkDashboardService],
 })
 export class DrinksDashboardComponent implements OnInit {
-  constructor(public http: DrinkHttpService) {}
+  allDrinks$ = signal(this.dashboardService.allDrinks$);
 
-  ngOnInit(): void {
-    this.http
-      .getDrinks()
-      .subscribe((drinks) =>
-        console.log('drinks >>>>>>>>>>>>>>>>>>>>>> ', drinks)
-      );
-  }
+  constructor(private dashboardService: DrinkDashboardService) {}
+
+  ngOnInit(): void {}
 }

@@ -3,6 +3,5 @@ export interface Configuration {
 }
 
 export const initConfig: Configuration = {
-  baseAPIUrl:
-    'https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic',
+  baseAPIUrl: '',
 };
