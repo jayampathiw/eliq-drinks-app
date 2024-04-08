@@ -16,7 +16,6 @@ export class DrinksDetailsComponent {
 
   ngOnInit() {
     this.activatedRoute.data.subscribe((res) => {
-      console.log('res >>>>>>>>>>>>>>> ', res);
       this.drink.set(res['data']);
     });
   }

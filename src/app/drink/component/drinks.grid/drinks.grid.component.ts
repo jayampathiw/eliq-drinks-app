@@ -28,7 +28,6 @@ export class DrinksGridComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.data.subscribe((res) => {
       this.allDrinks$.set(res['data']);
-      console.log('res >>>>>>>>>>>>>>> ', res);
     });
   }
 
