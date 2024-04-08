@@ -5,12 +5,7 @@ import { asyncScheduler, first, observeOn, switchMap } from 'rxjs';
 
 export const drinksListResolver: ResolveFn<Object> = (route, state) => {
   const drinksService = inject(DrinkDashboardService);
-  const allDrinks$ = drinksService.loadingStatus$.pipe(
-    observeOn(asyncScheduler),
-    first((f) => !f),
-    switchMap(() => drinksService.allDrinks$)
-  );
-  return allDrinks$;
+  return drinksService.getInitAllDrinks();
 };
 
 export const selectedDrinkResolver: ResolveFn<Object> = (route, state) => {
