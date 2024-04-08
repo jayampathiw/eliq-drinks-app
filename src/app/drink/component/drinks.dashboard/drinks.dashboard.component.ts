@@ -1,8 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { DrinkDashboardService } from '../../service/dashboard/drink.dashboard.service';
-import { DrinkStoreService } from '../../state/drink.store';
-import { provideComponentStore } from '@ngrx/component-store';
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { DrinksItemComponent } from '../drinks.grid/drinks.item/drinks.item.component';
 import { DrinksGridComponent } from '../drinks.grid/drinks.grid.component';
 import { DrinksLoaderComponent } from '../drinks.loader/drinks.loader.component';
@@ -20,10 +18,11 @@ import { RouterOutlet } from '@angular/router';
     DrinksGridComponent,
     DrinksLoaderComponent,
     RouterOutlet,
+    NgIf,
   ],
 })
 export class DrinksDashboardComponent implements OnInit {
-  allDrinks$ = signal(this.dashboardService.allDrinks$);
+  loadingStatus$ = signal(this.dashboardService.loadingStatus$);
 
   constructor(private dashboardService: DrinkDashboardService) {}
 

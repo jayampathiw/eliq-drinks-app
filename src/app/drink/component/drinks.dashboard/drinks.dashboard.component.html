@@ -1,6 +1,4 @@
-<p>drinks.dashboard works!</p>
-
-<div class="loader">
+<div class="loader" *ngIf="!!(loadingStatus$() | async)">
   <app-drinks-loader></app-drinks-loader>
 </div>
 

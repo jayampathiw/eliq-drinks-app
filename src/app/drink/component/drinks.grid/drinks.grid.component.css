@@ -6,3 +6,8 @@
 .drink-grid-item {
   flex: 1 1 20rem;
 }
+
+.drink-grid {
+  background-color: var(--background-color);
+  padding: 2rem;
+}

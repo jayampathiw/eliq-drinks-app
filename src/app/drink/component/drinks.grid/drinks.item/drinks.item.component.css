@@ -31,7 +31,7 @@ img:hover {
   top: 80%;
   background-color: rgba(0, 0, 0, 0.5);
   font-family: Arial, sans-serif;
-  color: #fff;
+  color: var(--text-color);
   height: 4rem;
   width: auto;
 }

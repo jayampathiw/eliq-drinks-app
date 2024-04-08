@@ -16,7 +16,7 @@
   border-radius: 50%;
 }
 .custom-loader::before {
-  border-color: #766df4 #0000;
+  border-color: hsl(0, 0%, 100%) #0000;
   animation: inherit;
   animation-duration: 0.5s;
   animation-direction: reverse;
